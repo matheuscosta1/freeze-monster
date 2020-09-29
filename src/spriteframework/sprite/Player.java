@@ -8,8 +8,8 @@ import java.awt.event.KeyEvent;
 
 public class Player extends Sprite {
 
-    private int width;
-    private int weight;
+    private int width = 30;
+    private int weight = 50;
 
     public Player(String player) {
         loadImage(player);
@@ -19,9 +19,7 @@ public class Player extends Sprite {
 
     protected void loadImage (String player) {
         ImageIcon ii = new ImageIcon(player);
-        width = ii.getImage().getWidth(null);
-        weight = ii.getImage().getHeight(null);
-        setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_SMOOTH));
+        setImage(ii.getImage().getScaledInstance(width, weight, Image.SCALE_DEFAULT));
     }
     
     public void act() {

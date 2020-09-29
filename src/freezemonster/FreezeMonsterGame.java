@@ -13,7 +13,7 @@ public class FreezeMonsterGame extends MainFrame {
 	}
 	
 	protected  AbstractBoard createBoard() {
-		return new FreezeMonsterBoard("images/player.png");
+		return new FreezeMonsterBoard("images/woody.png");
 	}
 
 

@@ -12,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Random;
 
 public class FreezeMonsterBoard extends AbstractBoard{
@@ -32,11 +31,13 @@ public class FreezeMonsterBoard extends AbstractBoard{
     }
 
     protected void createBadSprites() {  // create sprites
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 6; j++) {
-                MonsterSprite alien = new MonsterSprite(Commons.ALIEN_INIT_X + 18 * j,
-                        Commons.ALIEN_INIT_Y + 18 * i, i);
-                badSprites.add(alien);
+        int m = 1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                MonsterSprite monster = new MonsterSprite((Commons.MONSTER_INIT_X + 18 * j * m),
+                        (Commons.MONSTER_INIT_Y + 18 * i * m));
+                badSprites.add(monster);
+                m++;
             }
         }
     }
@@ -102,9 +103,9 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
                 if (alien.isVisible() && shot.isVisible()) {
                     if (shotX >= (alienX)
-                            && shotX <= (alienX + Commons.ALIEN_WIDTH)
+                            && shotX <= (alienX + Commons.MONSTER_WIDTH)
                             && shotY >= (alienY)
-                            && shotY <= (alienY + Commons.ALIEN_HEIGHT)) {
+                            && shotY <= (alienY + Commons.MONSTER_HEIGHT)) {
 
                         ImageIcon ii = new ImageIcon(explImg);
                         alien.setImage(ii.getImage());
@@ -167,7 +168,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
                 int y = alien.getY();
 
-                if (y > Commons.GROUND - Commons.ALIEN_HEIGHT) {
+                if (y > Commons.GROUND - Commons.MONSTER_HEIGHT) {
                     inGame = false;
                     message = "Invasion!";
                 }
