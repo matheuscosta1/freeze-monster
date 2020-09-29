@@ -1,25 +1,24 @@
-package spaceinvaders;
+package freezemonster;
 
 
+import freezemonster.sprite.Goop;
+import freezemonster.sprite.MonsterSprite;
+import freezemonster.sprite.Shot;
+import spriteframework.AbstractBoard;
+import spriteframework.sprite.BadSprite;
+import spriteframework.sprite.Player;
+
+import javax.swing.*;
 import java.awt.*;
-
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
-import javax.swing.*;
-
-import spriteframework.AbstractBoard;
-import spriteframework.sprite.BadSprite;
-import spriteframework.sprite.Player;
-
-import spaceinvaders.sprite.*;
-
-public class SpaceInvadersBoard extends AbstractBoard{  
+public class FreezeMonsterBoard extends AbstractBoard{
     //define sprites
     //private List<BadSprite> aliens;
-    private Shot shot;    
+    private Shot shot;
     
     // define global control vars   
     private int direction = -1;
@@ -28,15 +27,15 @@ public class SpaceInvadersBoard extends AbstractBoard{
 
     private String explImg = "images/explosion.png";
 
-    public SpaceInvadersBoard(String image) {
+    public FreezeMonsterBoard(String image) {
         super(image);
     }
 
     protected void createBadSprites() {  // create sprites
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
-                BomberSprite alien = new BomberSprite(Commons.ALIEN_INIT_X + 18 * j,
-                        Commons.ALIEN_INIT_Y + 18 * i);
+                MonsterSprite alien = new MonsterSprite(Commons.ALIEN_INIT_X + 18 * j,
+                        Commons.ALIEN_INIT_Y + 18 * i, i);
                 badSprites.add(alien);
             }
         }
@@ -77,25 +76,6 @@ public class SpaceInvadersBoard extends AbstractBoard{
 		}
 	}
 
-//    private void gameOver(Graphics g) {
-//
-//        g.setColor(Color.black);
-//        g.fillRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
-//
-//        g.setColor(new Color(0, 32, 48));
-//        g.fillRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
-//        g.setColor(Color.white);
-//        g.drawRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
-//
-//        Font small = new Font("Helvetica", Font.BOLD, 14);
-//        FontMetrics fontMetrics = this.getFontMetrics(small);
-//
-//        g.setColor(Color.white);
-//        g.setFont(small);
-//        g.drawString(message, (Commons.BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2,
-//                Commons.BOARD_WIDTH / 2);
-//    }
-
     protected void update() {
 
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
@@ -106,8 +86,8 @@ public class SpaceInvadersBoard extends AbstractBoard{
         }
 
         // player
-        for (Player player: players)
-        	player.act();
+        for (Player player : players)
+            player.act();
 
         // shot
         if (shot.isVisible()) {
@@ -210,21 +190,21 @@ public class SpaceInvadersBoard extends AbstractBoard{
         for (BadSprite alien : badSprites) {
 
             int shot = generator.nextInt(15);
-            Bomb bomb = ((BomberSprite)alien).getBomb();
+            Goop goop = ((MonsterSprite)alien).getBomb();
 
-            if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
+            if (shot == Commons.CHANCE && alien.isVisible() && goop.isDestroyed()) {
 
-                bomb.setDestroyed(false);
-                bomb.setX(alien.getX());
-                bomb.setY(alien.getY());
+                goop.setDestroyed(false);
+                goop.setX(alien.getX());
+                goop.setY(alien.getY());
             }
 
-            int bombX = bomb.getX();
-            int bombY = bomb.getY();
+            int bombX = goop.getX();
+            int bombY = goop.getY();
             int playerX = players.get(0).getX();
             int playerY = players.get(0).getY();
 
-            if (players.get(0).isVisible() && !bomb.isDestroyed()) {
+            if (players.get(0).isVisible() && !goop.isDestroyed()) {
 
                 if (bombX >= (playerX)
                         && bombX <= (playerX + Commons.PLAYER_WIDTH)
@@ -234,20 +214,52 @@ public class SpaceInvadersBoard extends AbstractBoard{
                     ImageIcon ii = new ImageIcon(explImg);
                     players.get(0).setImage(ii.getImage());
                     players.get(0).setDying(true);
-                    bomb.setDestroyed(true);
+                    goop.setDestroyed(true);
                 }
             }
 
-            if (!bomb.isDestroyed()) {
+            if (!goop.isDestroyed()) {
 
-                bomb.setY(bomb.getY() + 1);
+                goop.setY(goop.getY() + 1);
 
-                if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
+                if (goop.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
 
-                    bomb.setDestroyed(true);
+                    goop.setDestroyed(true);
                 }
             }
         }
-	}    
+	}
+
+    @Override
+    public void doDrawing(Graphics g1) {
+        Graphics2D g = (Graphics2D) g1;
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
+        g.setColor(new Color(87, 161, 112));
+        g.fillRect(0, 0, d.width, d.height);
+
+        if (inGame) {
+
+            g.drawLine(0, spriteframework.Commons.GROUND,
+                    spriteframework.Commons.BOARD_WIDTH, spriteframework.Commons.GROUND);
+
+            drawBadSprites(g);
+            drawPlayers(g);
+            drawOtherSprites(g);
+
+        } else {
+
+            if (timer.isRunning()) {
+                timer.stop();
+            }
+
+            gameOver(g);
+        }
+
+        Toolkit.getDefaultToolkit().sync();
+    }
 }
 

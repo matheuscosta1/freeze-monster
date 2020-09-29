@@ -29,7 +29,7 @@ public abstract class AbstractBoard extends JPanel {
 //    private int direction = -1;
 //    private int deaths = 0;
 
-    private int numberPlayers;  // to do - future use
+    protected int numberPlayers;  // to do - future use
     protected boolean inGame = true;
 //    private String explImg = "src/images/explosion.png";
     protected String message = "Game Over";
@@ -46,10 +46,10 @@ public abstract class AbstractBoard extends JPanel {
     protected abstract void update();
     protected abstract void processOtherSprites(Player player, KeyEvent e);
 
-    public AbstractBoard() {
+    public AbstractBoard(String image) {
 
-        initBoard();
-        createPlayers();
+        initBoard(image);
+        createPlayers(image);
 		        numberPlayers = 1;
 		        badSprites = new LinkedList<BadSprite>();
 		        createBadSprites();
@@ -57,7 +57,7 @@ public abstract class AbstractBoard extends JPanel {
 		//        shot = new Shot();
     }
 
-    private void initBoard() {
+    protected void initBoard(String image) {
 
     	addKeyListener(new TAdapter());
     	setFocusable(true);
@@ -67,7 +67,7 @@ public abstract class AbstractBoard extends JPanel {
     	timer = new Timer(Commons.DELAY, new GameCycle());
     	timer.start();
 
-    	createPlayers();
+    	createPlayers(image);
     	numberPlayers = 1;
     	badSprites = new LinkedList<BadSprite>();
     	createBadSprites();
@@ -76,13 +76,13 @@ public abstract class AbstractBoard extends JPanel {
     }
 
 
-    protected void createPlayers() {
+    protected void createPlayers(String player) {
 		players = new LinkedList<Player>();
-        players.add(createPlayer());
+        players.add(createPlayer(player));
 	}
 	
-	protected Player createPlayer() {
-		return new Player();
+	protected Player createPlayer(String player) {
+		return new Player(player);
 	}
 
    public Player getPlayer(int i) {
@@ -91,7 +91,7 @@ public abstract class AbstractBoard extends JPanel {
 	   return null;
    }
    
-    private void drawBadSprites(Graphics g) {
+    protected void drawBadSprites(Graphics g) {
 
         for (BadSprite bad : badSprites) {
 
@@ -114,7 +114,7 @@ public abstract class AbstractBoard extends JPanel {
         }
     }
 
-    private void drawPlayers(Graphics g) {
+    protected void drawPlayers(Graphics g) {
     	for (Player player: players) {
     		if (player.isVisible()) {
     			g.drawImage(player.getImage(), player.getX(), player.getY(), this);
@@ -128,17 +128,13 @@ public abstract class AbstractBoard extends JPanel {
     	}
     }
 
-
-
-
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         doDrawing(g);
     }
 
-    private void doDrawing(Graphics g1) { // Template Method
+    public void doDrawing(Graphics g1) { // Template Method
         Graphics2D g = (Graphics2D) g1;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -170,7 +166,7 @@ public abstract class AbstractBoard extends JPanel {
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void gameOver(Graphics g) {
+    protected void gameOver(Graphics g) {
 
         g.setColor(Color.black);
         g.fillRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
@@ -189,26 +185,20 @@ public abstract class AbstractBoard extends JPanel {
                 Commons.BOARD_WIDTH / 2);
     }
 
-
-
-    private void doGameCycle() {
-
+    protected void doGameCycle() {
         update();
         repaint();
     }
 
-
-
-	private class GameCycle implements ActionListener {
+    public class GameCycle implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
             doGameCycle();
         }
     }
 
-    private class TAdapter extends KeyAdapter {
+    public class TAdapter extends KeyAdapter {
 
         @Override
         public void keyReleased(KeyEvent e) {

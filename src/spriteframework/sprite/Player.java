@@ -3,22 +3,23 @@ package spriteframework.sprite;
 import spriteframework.Commons;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Player extends Sprite {
 
     private int width;
 
-    public Player() {
-        loadImage();
+    public Player(String player) {
+        loadImage(player);
 		getImageDimensions();
 		resetState();
     }
 
-    protected void loadImage () {
-        ImageIcon ii = new ImageIcon("/home/matheus/Documents/programacao-orientada-objetos-2/trabalho/Arcade-Sprite-Based-Space-Invaders/Arcade-Sprite-Based-Space-Invaders/images/player.png");
+    protected void loadImage (String player) {
+        ImageIcon ii = new ImageIcon(player);
         width = ii.getImage().getWidth(null);
-        setImage(ii.getImage());
+        setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_SMOOTH));
     }
     
     public void act() {
@@ -65,7 +66,8 @@ public class Player extends Sprite {
             dx = 0;
         }
     }
-    private void resetState() {
+
+    public void resetState() {
 
         setX(Commons.INIT_PLAYER_X);
         setY(Commons.INIT_PLAYER_Y);

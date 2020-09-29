@@ -13,6 +13,7 @@ public class Sprite {
     protected int imageWidth;
     protected int imageHeight;
     protected int dx;
+    protected int dy;
 
     public Sprite() {
 

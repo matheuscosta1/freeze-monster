@@ -13,16 +13,13 @@ public class SpaceInvadersGame extends MainFrame {
 	}
 	
 	protected  AbstractBoard createBoard() {
-		return new SpaceInvadersBoard();
+		return new SpaceInvadersBoard("images/player.png");
 	}
 
 
 	public static void main(String[] args) {
 
-		EventQueue.invokeLater(() -> {
-
-			new SpaceInvadersGame();
-		});
+		EventQueue.invokeLater(SpaceInvadersGame::new);
 	}
 
 }

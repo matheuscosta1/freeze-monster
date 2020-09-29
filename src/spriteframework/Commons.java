@@ -1,13 +1,13 @@
 package spriteframework;
 
 public interface Commons {
-    int GROUND = 290;
+    int GROUND = 790;
     
-    int BOARD_WIDTH = 358;
-    int BOARD_HEIGHT = 350;
+    int BOARD_WIDTH = 758;
+    int BOARD_HEIGHT = 750;
     int BORDER_RIGHT = 30;
     int BORDER_LEFT = 5;
-    int INIT_PLAYER_X = 270;
-    int INIT_PLAYER_Y = 280;
+    int INIT_PLAYER_X = 570;
+    int INIT_PLAYER_Y = 580;
     int DELAY = 17;
     }
