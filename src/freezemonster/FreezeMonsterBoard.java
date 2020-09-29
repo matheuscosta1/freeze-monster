@@ -181,9 +181,6 @@ public class FreezeMonsterBoard extends AbstractBoard{
         updateOtherSprites();
     }
 
-	
-
-    
     protected void updateOtherSprites() {
 		Random generator = new Random();
 
