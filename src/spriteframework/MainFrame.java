@@ -4,7 +4,6 @@ import javax.swing.*;
 
 public abstract class MainFrame extends JFrame  {
 
-    // hotspot
     protected abstract AbstractBoard createBoard();
     
     public MainFrame(String t) {
@@ -19,14 +18,4 @@ public abstract class MainFrame extends JFrame  {
 		setLocationRelativeTo(null);
 		setVisible(true);
     }
-
-
-//    public static void main(String[] args) {
-//
-//        EventQueue.invokeLater(() -> {
-//
-//            MainFrameExtended ex = new MainFrameExtended();
-//        });
-//    }
-    
 }

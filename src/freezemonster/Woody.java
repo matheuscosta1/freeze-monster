@@ -1,4 +1,4 @@
-package freezemonster.sprite;
+package freezemonster;
 
 import java.awt.event.KeyEvent;
 

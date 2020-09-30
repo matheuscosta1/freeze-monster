@@ -11,9 +11,15 @@ import java.util.Random;
 public class MonsterSprite extends BadnessBoxSprite {
 
     private Goop goop;
+    private String monsterImage;
+    private Integer monsterImageIndice;
 
     public MonsterSprite(int x, int y) {
         initMonster(x, y);
+    }
+
+    public int getMonsterImageIndice(){
+        return this.monsterImageIndice;
     }
 
     private void initMonster(int x, int y) {
@@ -24,8 +30,9 @@ public class MonsterSprite extends BadnessBoxSprite {
         goop = new Goop(x, y);
 
         Random random = new Random();
-        String alienImg = "images/monster"+random.nextInt(10 - 1 + 1)+".png";
-        ImageIcon ii = new ImageIcon(alienImg);
+        monsterImageIndice = random.nextInt(9 - 1 + 1);
+        monsterImage = "images/monster"+monsterImageIndice+".png";
+        ImageIcon ii = new ImageIcon(monsterImage);
 
         setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_SMOOTH));
     }
@@ -33,7 +40,6 @@ public class MonsterSprite extends BadnessBoxSprite {
     public Goop getBomb() {
         return goop;
     }
-
 
 	@Override
 	public LinkedList<BadSprite> getBadnesses() {

@@ -78,9 +78,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
 	}
 
     protected void update() {
-
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
-
             inGame = false;
             timer.stop();
             message = "Game won!";
@@ -96,20 +94,17 @@ public class FreezeMonsterBoard extends AbstractBoard{
             int shotX = shot.getX();
             int shotY = shot.getY();
 
-            for (BadSprite alien : badSprites) {
+            for (BadSprite monster : badSprites) {
 
-                int alienX = alien.getX();
-                int alienY = alien.getY();
+                int alienX = monster.getX();
+                int alienY = monster.getY();
 
-                if (alien.isVisible() && shot.isVisible()) {
-                    if (shotX >= (alienX)
-                            && shotX <= (alienX + Commons.MONSTER_WIDTH)
-                            && shotY >= (alienY)
-                            && shotY <= (alienY + Commons.MONSTER_HEIGHT)) {
+                if (monster.isVisible() && shot.isVisible()) {
+                    if (shotX >= (alienX) && shotX <= (alienX + Commons.MONSTER_WIDTH) && shotY >= (alienY) && shotY <= (alienY + Commons.MONSTER_HEIGHT)) {
 
-                        ImageIcon ii = new ImageIcon(explImg);
-                        alien.setImage(ii.getImage());
-                        alien.setDying(true);
+                        ImageIcon ii = new ImageIcon("images/monster"+monster.getMonsterImageIndice()+"bg.png");
+                        monster.setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_DEFAULT));
+                        monster.setDying(true);
                         deaths++;
                         shot.die();
                     }
@@ -131,6 +126,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
         for (BadSprite alien : badSprites) {
 
             int x = alien.getX();
+            int y = alien.getY();
 
             if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
 
@@ -140,7 +136,10 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
                 while (i1.hasNext()) {
                     BadSprite a2 = i1.next();
-                    a2.setY(a2.getY() + Commons.GO_DOWN);
+                    if(a2.isVisible()){
+                        a2.setY(a2.getY() + Commons.GO_DOWN);
+                    }
+
                 }
             }
 
@@ -153,7 +152,10 @@ public class FreezeMonsterBoard extends AbstractBoard{
                 while (i2.hasNext()) {
 
                     BadSprite a = i2.next();
-                    a.setY(a.getY() + Commons.GO_DOWN);
+                    if(a.isVisible()){
+                        a.setY(a.getY() + Commons.GO_DOWN);
+                    }
+
                 }
             }
         }
@@ -245,6 +247,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
                     spriteframework.Commons.BOARD_WIDTH, spriteframework.Commons.GROUND);
 
             drawBadSprites(g);
+            drawBadSprite(g);
             drawPlayers(g);
             drawOtherSprites(g);
 

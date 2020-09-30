@@ -33,5 +33,10 @@ public class Goop extends BadSprite {
     public boolean isDestroyed() {
         return destroyed;
     }
-    
+
+    @Override
+    public int getMonsterImageIndice() {
+        return 0;
+    }
+
 }

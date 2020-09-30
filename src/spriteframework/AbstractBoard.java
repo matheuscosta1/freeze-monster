@@ -16,30 +16,16 @@ import java.util.LinkedList;
 public abstract class AbstractBoard extends JPanel {
 
     protected Dimension d;
-    
-    //define sprites
-//    private List<Alien> aliens;
+
     protected LinkedList<Player> players;
     
     protected LinkedList<BadSprite> badSprites;
-    
-//    private Shot shot;
-//    
-    // define global control vars   
-//    private int direction = -1;
-//    private int deaths = 0;
-
-    protected int numberPlayers;  // to do - future use
+    protected int numberPlayers;
     protected boolean inGame = true;
-//    private String explImg = "src/images/explosion.png";
     protected String message = "Game Over";
 
     protected Timer timer;
 
-    // Frozen Spots
-    //  void initBoard()
-    // 
-    // HotSpots
     protected abstract void createBadSprites();
     protected abstract void createOtherSprites();
     protected abstract void drawOtherSprites(Graphics g);
@@ -50,11 +36,10 @@ public abstract class AbstractBoard extends JPanel {
 
         initBoard(image);
         createPlayers(image);
-		        numberPlayers = 1;
-		        badSprites = new LinkedList<BadSprite>();
-		        createBadSprites();
-		        createOtherSprites();
-		//        shot = new Shot();
+        numberPlayers = 1;
+        badSprites = new LinkedList<BadSprite>();
+        createBadSprites();
+        createOtherSprites();
     }
 
     protected void initBoard(String image) {
@@ -72,7 +57,6 @@ public abstract class AbstractBoard extends JPanel {
     	badSprites = new LinkedList<BadSprite>();
     	createBadSprites();
     	createOtherSprites();
-		//        shot = new Shot();
     }
 
 
@@ -101,15 +85,24 @@ public abstract class AbstractBoard extends JPanel {
             }
 
             if (bad.isDying()) {
-
                 bad.die();
             }
+
             if (bad.getBadnesses()!= null) {
             	for (BadSprite badness: bad.getBadnesses()) {
             		if (!badness.isDestroyed()) {
             			g.drawImage(badness.getImage(), badness.getX(), badness.getY(), this);
             		}
             	}
+            }
+        }
+    }
+
+    protected void drawBadSprite(Graphics g){
+        for (BadSprite bad : badSprites) {
+
+            if (!bad.isVisible()) {
+                g.drawImage(bad.getImage(), bad.getX(), bad.getY(), this);
             }
         }
     }

@@ -21,5 +21,4 @@ public class FreezeMonsterGame extends MainFrame {
 
 		EventQueue.invokeLater(FreezeMonsterGame::new);
 	}
-
 }

@@ -10,41 +10,49 @@ public class Player extends Sprite {
 
     private int width = 30;
     private int weight = 50;
+    private String player;
 
-    public Player(String player) {
-        loadImage(player);
+    public Player(String image) {
+        loadImage(image);
 		getImageDimensions();
 		resetState();
     }
 
-    protected void loadImage (String player) {
-        ImageIcon ii = new ImageIcon(player);
+    protected void loadImage(String image) {
+        ImageIcon ii = new ImageIcon(image);
         setImage(ii.getImage().getScaledInstance(width, weight, Image.SCALE_DEFAULT));
+        player = image.split("/")[1];
     }
     
     public void act() {
 
         x += dx;
-        y += dy;
 
         if (x <= 2) {
 
             x = 2;
         }
-        if (y <= 2) {
 
-            y = 2;
-        }
 
         if (x >= Commons.BOARD_WIDTH - 2 * width) {
 
             x = Commons.BOARD_WIDTH - 2 * width;
         }
 
-        if (y >= Commons.BOARD_HEIGHT - 2 * weight) {
+        if(player.equals("woody.png")){
+            y += dy;
 
-            y = Commons.BOARD_HEIGHT - 2 * weight;
+            if (y >= Commons.BOARD_HEIGHT - 2 * weight) {
+
+                y = Commons.BOARD_HEIGHT - 2 * weight;
+            }
+
+            if (y <= 2) {
+
+                y = 2;
+            }
         }
+
     }
 
     public void keyPressed(KeyEvent e) {
@@ -61,13 +69,15 @@ public class Player extends Sprite {
             dx = 2;
         }
 
-        if (key == KeyEvent.VK_UP) {
-            dy = -2;
-        }
+        if(player.equals("woody.png")) {
+            if (key == KeyEvent.VK_UP) {
+                dy = -2;
+            }
 
-        if (key == KeyEvent.VK_DOWN) {
+            if (key == KeyEvent.VK_DOWN) {
 
-            dy = 2;
+                dy = 2;
+            }
         }
     }
 
@@ -85,14 +95,17 @@ public class Player extends Sprite {
             dx = 0;
         }
 
-        if (key == KeyEvent.VK_UP) {
+        if(player.equals("woody.png")) {
 
-            dy = 0;
-        }
+            if (key == KeyEvent.VK_UP) {
 
-        if (key == KeyEvent.VK_DOWN) {
+                dy = 0;
+            }
 
-            dy = 0;
+            if (key == KeyEvent.VK_DOWN) {
+
+                dy = 0;
+            }
         }
     }
 

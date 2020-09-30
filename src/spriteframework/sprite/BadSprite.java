@@ -12,4 +12,6 @@ public abstract class BadSprite extends Sprite {
 	public void act () {
 		//
 	}
+
+	public abstract int getMonsterImageIndice();
 }

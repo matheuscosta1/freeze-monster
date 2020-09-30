@@ -10,8 +10,13 @@ public class BadnessBoxSprite  extends BadSprite {
     	 badnesses.add(b);
      }
      
-     public LinkedList<BadSprite>  getBadnesses() {
+     public LinkedList<BadSprite> getBadnesses() {
     	 return badnesses;
      }
-     
+
+    @Override
+    public int getMonsterImageIndice() {
+        return 0;
+    }
+
 }

@@ -34,6 +34,11 @@ public class Bomb extends BadSprite {
 
         return destroyed;
     }
-    
-    
+
+    @Override
+    public int getMonsterImageIndice() {
+        return 0;
+    }
+
+
 }
