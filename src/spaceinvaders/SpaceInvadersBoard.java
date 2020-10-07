@@ -5,13 +5,13 @@ import java.awt.*;
 
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Random;
 
 import javax.swing.*;
 
 import spriteframework.AbstractBoard;
 import spriteframework.sprite.BadSprite;
+import spriteframework.sprite.PlayerUnilateral;
 import spriteframework.sprite.Player;
 
 import spaceinvaders.sprite.*;
@@ -248,6 +248,11 @@ public class SpaceInvadersBoard extends AbstractBoard{
                 }
             }
         }
-	}    
+	}
+
+    @Override
+    protected Player createPlayer(String player) {
+        return new PlayerUnilateral(player);
+    }
 }
 

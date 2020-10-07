@@ -6,12 +6,12 @@ import freezemonster.sprite.MonsterSprite;
 import freezemonster.sprite.Shot;
 import spriteframework.AbstractBoard;
 import spriteframework.sprite.BadSprite;
+import spriteframework.sprite.PlayerBilateral;
 import spriteframework.sprite.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Iterator;
 import java.util.Random;
 
 public class FreezeMonsterBoard extends AbstractBoard{
@@ -263,6 +263,11 @@ public class FreezeMonsterBoard extends AbstractBoard{
         }
 
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    @Override
+    protected Player createPlayer(String player) {
+        return new PlayerBilateral(player);
     }
 }
 
