@@ -1,5 +1,6 @@
 package freezemonster.sprite;
 
+import freezemonster.Commons;
 import spriteframework.sprite.BadSprite;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class Shot extends BadSprite {
 
         String shotImg = "images/ray.png";
         ImageIcon ii = new ImageIcon(shotImg);
-        setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_SMOOTH));
+        setImage(ii.getImage().getScaledInstance(Commons.SHOT_WIDTH, Commons.SHOT_HEIGHT, Image.SCALE_SMOOTH));
 
         int H_SPACE = 6;
         setX(x + H_SPACE);

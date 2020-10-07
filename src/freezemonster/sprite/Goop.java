@@ -1,5 +1,6 @@
 package freezemonster.sprite;
 
+import freezemonster.Commons;
 import spriteframework.sprite.BadSprite;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 public class Goop extends BadSprite {
 
     private boolean destroyed;
-    private int direcao=0;
+    private int direction = 0;
 
     public Goop(int x, int y) {
 
@@ -24,7 +25,7 @@ public class Goop extends BadSprite {
 
         String bombImg = "images/goop.png";
         ImageIcon ii = new ImageIcon(bombImg);
-        setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_SMOOTH));
+        setImage(ii.getImage().getScaledInstance(Commons.GOOP_WIDTH, Commons.GOOP_HEIGHT, Image.SCALE_SMOOTH));
     }
 
     public void setDestroyed(boolean destroyed) {
@@ -40,12 +41,12 @@ public class Goop extends BadSprite {
         return 0;
     }
 
-    public int isDirecao() {
-        return direcao;
+    public int isDirection() {
+        return direction;
     }
 
-    public void setDirecao(int direcao) {
-        this.direcao = direcao;
+    public void setDirection(int direction) {
+        this.direction = direction;
     }
 
 }

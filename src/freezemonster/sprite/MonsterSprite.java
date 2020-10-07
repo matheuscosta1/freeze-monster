@@ -1,5 +1,6 @@
 package freezemonster.sprite;
 
+import freezemonster.Commons;
 import spriteframework.sprite.BadSprite;
 import spriteframework.sprite.BadnessBoxSprite;
 
@@ -34,7 +35,7 @@ public class MonsterSprite extends BadnessBoxSprite {
         monsterImage = "images/monster"+monsterImageIndice+".png";
         ImageIcon ii = new ImageIcon(monsterImage);
 
-        setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_SMOOTH));
+        setImage(ii.getImage().getScaledInstance(Commons.MONSTER_WIDTH, Commons.MONSTER_HEIGHT, Image.SCALE_SMOOTH));
     }
 
     public Goop getBomb() {

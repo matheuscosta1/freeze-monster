@@ -21,7 +21,8 @@ public class FreezeMonsterBoard extends AbstractBoard{
     private Shot shot;
     
     // define global control vars   
-    private int direction = 0;
+    private int direction = -1;
+    private int direc = 0;
     private int deaths = 0;
 
 
@@ -32,7 +33,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
     }
 
     protected void createBadSprites() {  // create sprites
-        for (int i = 0; i < Commons.NUMBER_OF_ALIENS_TO_DESTROY; i++) {
+        for (int i = 0; i < Commons.NUMBER_OF_MONSTERS_TO_DESTROY; i++) {
 
             MonsterSprite monster = new MonsterSprite(Commons.MONSTER_INIT_X + 18 * (int)(Math.random()*10) ,
                     Commons.MONSTER_INIT_Y + 18 * (int)(Math.random()*10), i);
@@ -76,7 +77,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
 	}
 
     protected void update() {
-        if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
+        if (deaths == Commons.NUMBER_OF_MONSTERS_TO_DESTROY) {
             inGame = false;
             timer.stop();
             message = "Game won!";
@@ -94,15 +95,15 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
             for (BadSprite monster : badSprites) {
 
-                int alienX = monster.getX();
-                int alienY = monster.getY();
+                int monsterX = monster.getX();
+                int monsterY = monster.getY();
 
-                if (!monster.isDyingvisible() && shot.isVisible()) {
-                    if (shotX >= (alienX) && shotX <= (alienX + Commons.MONSTER_WIDTH) && shotY >= (alienY) && shotY <= (alienY + Commons.MONSTER_HEIGHT)) {
+                if (!monster.isDyingVisible() && shot.isVisible()) {
+                    if (shotX >= (monsterX) && shotX <= (monsterX + Commons.MONSTER_WIDTH) && shotY >= (monsterY) && shotY <= (monsterY + Commons.MONSTER_HEIGHT)) {
 
                         ImageIcon ii = new ImageIcon("images/monster"+monster.getMonsterImageIndice()+"bg.png");
-                        monster.setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_DEFAULT));
-                        monster.setDyingvisible(true);
+                        monster.setImage(ii.getImage().getScaledInstance(Commons.GOOP_WIDTH, Commons.GOOP_HEIGHT, Image.SCALE_DEFAULT));
+                        monster.setDyingVisible(true);
                         monster.setDying(true);
                         deaths++;
                         shot.die();
@@ -111,12 +112,31 @@ public class FreezeMonsterBoard extends AbstractBoard{
             }
 
             int y = shot.getY();
-            y -= 4;
+            int x = shot.getX();
 
-            if (y < 0) {
+            if((players.get(0).getDy()==-2 && players.get(0).getDx()==0 && direc == 0) || direc == 1 ) { //tiro para cima
+                y -= 4;
+                direc = 1;
+            }
+            if((players.get(0).getDy()==2 && players.get(0).getDx()==0 && direc == 0) || direc == 2 ) { //tiro para baixo
+                y += 4;
+                direc = 2;
+            }
+            if((players.get(0).getDy()==0 && players.get(0).getDx()==2 && direc == 0) || direc == 3 ) { //tiro para direita
+                x += 4;
+                direc = 3;
+            }
+            if((players.get(0).getDy()==0 && players.get(0).getDx()==-2 && direc == 0) || direc == 4 ) { //tiro para esquerda
+                x = x - 4;
+                direc = 4;
+            }
+
+            if (y < 0 || y >= Commons.BOARD_HEIGHT || x < 0 || x >= Commons.BOARD_WIDTH) {
                 shot.die();
+                direc = 0;
             } else {
                 shot.setY(y);
+                shot.setX(x);
             }
         }
 
@@ -127,57 +147,57 @@ public class FreezeMonsterBoard extends AbstractBoard{
             int x = monster.getX();
             int y = monster.getY();
 
-            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && !monster.isDyingvisible()) {
+            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && !monster.isDyingVisible()) {
 
                 int temp = new Random().nextInt(3);
                 if(temp == 0) {
-                    monster.setDirecaomonstro(2);
+                    monster.setMonsterDirection(2);
                 }
                 if(temp == 1) {
-                    monster.setDirecaomonstro(7);
+                    monster.setMonsterDirection(7);
                 }
                 if(temp == 2) {
-                    monster.setDirecaomonstro(3);
+                    monster.setMonsterDirection(3);
                 }
 
             }
 
-            if (x <= Commons.BORDER_LEFT && !monster.isDyingvisible()) {
+            if (x <= Commons.BORDER_LEFT && !monster.isDyingVisible()) {
                 int temp = new Random().nextInt(3);
                 if(temp == 0) {
-                    monster.setDirecaomonstro(4);
+                    monster.setMonsterDirection(4);
                 }
                 if(temp == 1) {
-                    monster.setDirecaomonstro(5);
+                    monster.setMonsterDirection(5);
                 }
                 if(temp == 2) {
-                    monster.setDirecaomonstro(1);
+                    monster.setMonsterDirection(1);
                 }
             }
-            if (y >= Commons.BOARD_HEIGHT - 50 && !monster.isDyingvisible()) {
+            if (y >= Commons.BOARD_HEIGHT - 50 && !monster.isDyingVisible()) {
                 int temp = new Random().nextInt(3);
                 if(temp == 0) {
-                    monster.setDirecaomonstro(2);
+                    monster.setMonsterDirection(2);
                 }
                 if(temp == 1) {
-                    monster.setDirecaomonstro(8);
+                    monster.setMonsterDirection(8);
                 }
                 if(temp == 2) {
-                    monster.setDirecaomonstro(4);
+                    monster.setMonsterDirection(4);
                 }
             }
 
-            if (y <= 0 && !monster.isDyingvisible()) {
+            if (y <= 0 && !monster.isDyingVisible()) {
 
                 int temp = new Random().nextInt(3);
                 if(temp == 0) {
-                    monster.setDirecaomonstro(3);
+                    monster.setMonsterDirection(3);
                 }
                 if(temp == 1) {
-                    monster.setDirecaomonstro(6);
+                    monster.setMonsterDirection(6);
                 }
                 if(temp == 2) {
-                    monster.setDirecaomonstro(1);
+                    monster.setMonsterDirection(1);
                 }
             }
         }
@@ -187,40 +207,40 @@ public class FreezeMonsterBoard extends AbstractBoard{
         while (it.hasNext()) {
 
             BadSprite monster = it.next();
-            if(monster.getDirecaomonstro()==0) {
-                monster.setDirecaomonstro(new Random().nextInt(8)+1);
+            if(monster.getMonsterDirection()==0) {
+                monster.setMonsterDirection(new Random().nextInt(8)+1);
             }
-            if (!monster.isDyingvisible()) {
+            if (!monster.isDyingVisible()) {
 
                 int y = monster.getY();
 
 
-                if(monster.getDirecaomonstro() == 1) {
+                if(monster.getMonsterDirection() == 1) {
                     monster.moveX(1);
                     monster.moveY(1);
                 }
-                if(monster.getDirecaomonstro() == 2) {
+                if(monster.getMonsterDirection() == 2) {
                     monster.moveX(-1);
                     monster.moveY(-1);
                 }
-                if(monster.getDirecaomonstro() == 3) {
+                if(monster.getMonsterDirection() == 3) {
                     monster.moveX(-1);
                     monster.moveY(1);
                 }
-                if(monster.getDirecaomonstro() == 4) {
+                if(monster.getMonsterDirection() == 4) {
                     monster.moveX(1);
                     monster.moveY(-1);
                 }
-                if(monster.getDirecaomonstro() == 5) {
+                if(monster.getMonsterDirection() == 5) {
                     monster.moveX(1);
                 }
-                if(monster.getDirecaomonstro() == 6) {
+                if(monster.getMonsterDirection() == 6) {
                     monster.moveY(1);
                 }
-                if(monster.getDirecaomonstro() == 7) {
+                if(monster.getMonsterDirection() == 7) {
                     monster.moveX(-1);
                 }
-                if(monster.getDirecaomonstro() == 8) {
+                if(monster.getMonsterDirection() == 8) {
                     monster.moveY(-1);
                 }
             }
@@ -239,8 +259,8 @@ public class FreezeMonsterBoard extends AbstractBoard{
             int shot = generator.nextInt(15);
             Goop goop = ((MonsterSprite)monster).getBomb();
 
-            if(goop.isDirecao() == 0) {
-                goop.setDirecao(new Random().nextInt(8)+1);
+            if(goop.isDirection() == 0) {
+                goop.setDirection(new Random().nextInt(8)+1);
             }
 
             if (shot == Commons.CHANCE && monster.isVisible() && goop.isDestroyed()) {
@@ -281,35 +301,35 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
             if (!goop.isDestroyed()) {
 
-                if (goop.isDirecao() == 1) {
+                if (goop.isDirection() == 1) {
                     goop.setY(goop.getY() - 1);
                     goop.setX(goop.getX() - 1);
                 }
-                if (goop.isDirecao() == 2) {
+                if (goop.isDirection() == 2) {
                     goop.setY(goop.getY() + 1);
                     goop.setX(goop.getX() - 1);
                 }
-                if (goop.isDirecao() == 3) {
+                if (goop.isDirection() == 3) {
                     goop.setY(goop.getY() - 1);
                     goop.setX(goop.getX() + 1);
                 }
-                if (goop.isDirecao() == 4) {
+                if (goop.isDirection() == 4) {
                     goop.setY(goop.getY() + 1);
                     goop.setX(goop.getX() + 1);
                 }
-                if (goop.isDirecao() == 5) {
+                if (goop.isDirection() == 5) {
                     goop.setY(goop.getY());
                     goop.setX(goop.getX() - 1);
                 }
-                if (goop.isDirecao() == 6) {
+                if (goop.isDirection() == 6) {
                     goop.setY(goop.getY() - 1);
                     goop.setX(goop.getX());
                 }
-                if (goop.isDirecao() == 7) {
+                if (goop.isDirection() == 7) {
                     goop.setY(goop.getY());
                     goop.setX(goop.getX() + 1);
                 }
-                if (goop.isDirecao() == 8) {
+                if (goop.isDirection() == 8) {
                     goop.setY(goop.getY() + 1);
                     goop.setX(goop.getX());
                 }

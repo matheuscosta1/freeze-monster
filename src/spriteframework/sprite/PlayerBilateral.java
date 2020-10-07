@@ -14,6 +14,7 @@ public class PlayerBilateral extends Player{
     public void act() {
 
         x += dx;
+        y += dy;
 
         if (x <= 2) {
 
@@ -25,7 +26,6 @@ public class PlayerBilateral extends Player{
             x = Commons.BOARD_WIDTH - 2 * width;
         }
 
-        y += dy;
 
         if (y >= Commons.BOARD_HEIGHT - 2 * weight) {
             y = Commons.BOARD_HEIGHT - 2 * weight;
@@ -84,7 +84,7 @@ public class PlayerBilateral extends Player{
 
         if (key == KeyEvent.VK_DOWN) {
 
-            dy = 0;
+            dy = -0;
         }
     }
 }

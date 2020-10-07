@@ -8,11 +8,9 @@ import java.awt.event.KeyEvent;
 
 public class Player extends Sprite {
 
-    protected int width = 30;
-    protected int weight = 50;
+    protected int width = Commons.PLAYER_WIDTH;
+    protected int weight = Commons.PLAYER_HEIGHT;
     private String player;
-    protected int dx;
-    protected int dy;
 
     public Player(String image) {
         loadImage(image);
