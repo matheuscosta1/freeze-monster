@@ -78,6 +78,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
 	}
 
     protected void update() {
+        Random random = new Random();
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
             inGame = false;
             timer.stop();
@@ -123,10 +124,10 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
         // aliens
 
-        for (BadSprite alien : badSprites) {
+        for (BadSprite monster : badSprites) {
 
-            int x = alien.getX();
-            int y = alien.getY();
+            int x = monster.getX();
+            int y = monster.getY();
 
             if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
 
@@ -135,11 +136,11 @@ public class FreezeMonsterBoard extends AbstractBoard{
                 Iterator<BadSprite> i1 = badSprites.iterator();
 
                 while (i1.hasNext()) {
-                    BadSprite a2 = i1.next();
-                    if(a2.isVisible()){
-                        a2.setY(a2.getY() + Commons.GO_DOWN);
+                    BadSprite monster2 = i1.next();
+                    if(monster2.isVisible()){
+                        monster2.setY(monster2.getY() + random.nextInt(100 - 1 + 1));
+                        monster2.setX(monster2.getX() + random.nextInt(100 - 1 + 1));
                     }
-
                 }
             }
 
@@ -150,12 +151,11 @@ public class FreezeMonsterBoard extends AbstractBoard{
                 Iterator<BadSprite> i2 = badSprites.iterator();
 
                 while (i2.hasNext()) {
-
-                    BadSprite a = i2.next();
-                    if(a.isVisible()){
-                        a.setY(a.getY() + Commons.GO_DOWN);
+                    BadSprite monster2 = i2.next();
+                    if(monster2.isVisible()){
+                        monster2.setY(monster2.getY() + random.nextInt(100 - 1 + 1));
+                        monster2.setX(monster2.getX() + random.nextInt(100 - 1 + 1));
                     }
-
                 }
             }
         }
@@ -164,18 +164,20 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
         while (it.hasNext()) {
 
-            BadSprite alien = it.next();
+            BadSprite monster = it.next();
 
-            if (alien.isVisible()) {
+            if (monster.isVisible()) {
 
-                int y = alien.getY();
+                int y = monster.getY();
 
                 if (y > Commons.GROUND - Commons.MONSTER_HEIGHT) {
-                    inGame = false;
-                    message = "Invasion!";
+//                    inGame = false;
+//                    message = "Invasion!";
+                    ;
                 }
 
-                alien.moveX(direction);
+                monster.moveX(direction);
+                monster.moveY(direction);
             }
         }
 
@@ -187,29 +189,39 @@ public class FreezeMonsterBoard extends AbstractBoard{
     protected void updateOtherSprites() {
 		Random generator = new Random();
 
-        for (BadSprite alien : badSprites) {
+        for (BadSprite monster : badSprites) {
 
             int shot = generator.nextInt(15);
-            Goop goop = ((MonsterSprite)alien).getBomb();
+            Goop goop = ((MonsterSprite)monster).getBomb();
 
-            if (shot == Commons.CHANCE && alien.isVisible() && goop.isDestroyed()) {
+            if (shot == Commons.CHANCE && monster.isVisible() && goop.isDestroyed()) {
 
                 goop.setDestroyed(false);
-                goop.setX(alien.getX());
-                goop.setY(alien.getY());
+                goop.setX(monster.getX());
+                goop.setY(monster.getY());
             }
 
             int bombX = goop.getX();
             int bombY = goop.getY();
+
+            int monsterX = monster.getX();
+            int monsterY = monster.getY();
+
             int playerX = players.get(0).getX();
             int playerY = players.get(0).getY();
 
             if (players.get(0).isVisible() && !goop.isDestroyed()) {
 
-                if (bombX >= (playerX)
-                        && bombX <= (playerX + Commons.PLAYER_WIDTH)
-                        && bombY >= (playerY)
-                        && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
+                if (
+                        ((bombX >= (playerX))
+                                && (bombX <= (playerX + Commons.PLAYER_WIDTH))
+                                && (bombY >= (playerY))
+                                && (bombY <= (playerY + Commons.PLAYER_HEIGHT)))
+                        || ((monsterX >= (playerX))
+                                && (monsterX <= (playerX + Commons.PLAYER_WIDTH))
+                                && (monsterY >= (playerY))
+                                && (monsterY <= (playerY + Commons.PLAYER_HEIGHT)))
+                ) {
 
                     ImageIcon ii = new ImageIcon(explImg);
                     players.get(0).setImage(ii.getImage());
