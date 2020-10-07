@@ -12,6 +12,7 @@ import spriteframework.sprite.Player;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 import java.util.Random;
 
 public class FreezeMonsterBoard extends AbstractBoard{
@@ -20,7 +21,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
     private Shot shot;
     
     // define global control vars   
-    private int direction = -1;
+    private int direction = 0;
     private int deaths = 0;
 
 
@@ -31,14 +32,11 @@ public class FreezeMonsterBoard extends AbstractBoard{
     }
 
     protected void createBadSprites() {  // create sprites
-        int m = 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                MonsterSprite monster = new MonsterSprite((Commons.MONSTER_INIT_X + 18 * j * m),
-                        (Commons.MONSTER_INIT_Y + 18 * i * m));
-                badSprites.add(monster);
-                m++;
-            }
+        for (int i = 0; i < Commons.NUMBER_OF_ALIENS_TO_DESTROY; i++) {
+
+            MonsterSprite monster = new MonsterSprite(Commons.MONSTER_INIT_X + 18 * (int)(Math.random()*10) ,
+                    Commons.MONSTER_INIT_Y + 18 * (int)(Math.random()*10), i);
+            badSprites.add(monster);
         }
     }
     
@@ -78,7 +76,6 @@ public class FreezeMonsterBoard extends AbstractBoard{
 	}
 
     protected void update() {
-        Random random = new Random();
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
             inGame = false;
             timer.stop();
@@ -100,11 +97,12 @@ public class FreezeMonsterBoard extends AbstractBoard{
                 int alienX = monster.getX();
                 int alienY = monster.getY();
 
-                if (monster.isVisible() && shot.isVisible()) {
+                if (!monster.isDyingvisible() && shot.isVisible()) {
                     if (shotX >= (alienX) && shotX <= (alienX + Commons.MONSTER_WIDTH) && shotY >= (alienY) && shotY <= (alienY + Commons.MONSTER_HEIGHT)) {
 
                         ImageIcon ii = new ImageIcon("images/monster"+monster.getMonsterImageIndice()+"bg.png");
                         monster.setImage(ii.getImage().getScaledInstance(30, 50, Image.SCALE_DEFAULT));
+                        monster.setDyingvisible(true);
                         monster.setDying(true);
                         deaths++;
                         shot.die();
@@ -129,45 +127,102 @@ public class FreezeMonsterBoard extends AbstractBoard{
             int x = monster.getX();
             int y = monster.getY();
 
-            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
+            if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && !monster.isDyingvisible()) {
 
-                direction = -1;
+                int temp = new Random().nextInt(3);
+                if(temp == 0) {
+                    monster.setDirecaomonstro(2);
+                }
+                if(temp == 1) {
+                    monster.setDirecaomonstro(7);
+                }
+                if(temp == 2) {
+                    monster.setDirecaomonstro(3);
+                }
 
-                for (BadSprite monster2 : badSprites) {
-                    if (monster2.isVisible()) {
-                        monster2.setY(monster2.getY() + random.nextInt(100 - 1 + 1));
-                        monster2.setX(monster2.getX() + random.nextInt(100 - 1 + 1));
-                    }
+            }
+
+            if (x <= Commons.BORDER_LEFT && !monster.isDyingvisible()) {
+                int temp = new Random().nextInt(3);
+                if(temp == 0) {
+                    monster.setDirecaomonstro(4);
+                }
+                if(temp == 1) {
+                    monster.setDirecaomonstro(5);
+                }
+                if(temp == 2) {
+                    monster.setDirecaomonstro(1);
+                }
+            }
+            if (y >= Commons.BOARD_HEIGHT - 50 && !monster.isDyingvisible()) {
+                int temp = new Random().nextInt(3);
+                if(temp == 0) {
+                    monster.setDirecaomonstro(2);
+                }
+                if(temp == 1) {
+                    monster.setDirecaomonstro(8);
+                }
+                if(temp == 2) {
+                    monster.setDirecaomonstro(4);
                 }
             }
 
-            if (x <= Commons.BORDER_LEFT && direction != 1) {
+            if (y <= 0 && !monster.isDyingvisible()) {
 
-                direction = 1;
-
-                for (BadSprite monster2 : badSprites) {
-                    if (monster2.isVisible()) {
-                        monster2.setY(monster2.getY() + random.nextInt(100 - 1 + 1));
-                        monster2.setX(monster2.getX() + random.nextInt(100 - 1 + 1));
-                    }
+                int temp = new Random().nextInt(3);
+                if(temp == 0) {
+                    monster.setDirecaomonstro(3);
+                }
+                if(temp == 1) {
+                    monster.setDirecaomonstro(6);
+                }
+                if(temp == 2) {
+                    monster.setDirecaomonstro(1);
                 }
             }
         }
 
-        for (BadSprite monster : badSprites) {
+        Iterator<BadSprite> it = badSprites.iterator();
 
-            if (monster.isVisible()) {
+        while (it.hasNext()) {
+
+            BadSprite monster = it.next();
+            if(monster.getDirecaomonstro()==0) {
+                monster.setDirecaomonstro(new Random().nextInt(8)+1);
+            }
+            if (!monster.isDyingvisible()) {
 
                 int y = monster.getY();
 
-                if (y > Commons.GROUND - Commons.MONSTER_HEIGHT) {
-//                    inGame = false;
-//                    message = "Invasion!";
-                    ;
-                }
 
-                monster.moveX(direction);
-                monster.moveY(direction);
+                if(monster.getDirecaomonstro() == 1) {
+                    monster.moveX(1);
+                    monster.moveY(1);
+                }
+                if(monster.getDirecaomonstro() == 2) {
+                    monster.moveX(-1);
+                    monster.moveY(-1);
+                }
+                if(monster.getDirecaomonstro() == 3) {
+                    monster.moveX(-1);
+                    monster.moveY(1);
+                }
+                if(monster.getDirecaomonstro() == 4) {
+                    monster.moveX(1);
+                    monster.moveY(-1);
+                }
+                if(monster.getDirecaomonstro() == 5) {
+                    monster.moveX(1);
+                }
+                if(monster.getDirecaomonstro() == 6) {
+                    monster.moveY(1);
+                }
+                if(monster.getDirecaomonstro() == 7) {
+                    monster.moveX(-1);
+                }
+                if(monster.getDirecaomonstro() == 8) {
+                    monster.moveY(-1);
+                }
             }
         }
 
@@ -183,6 +238,10 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
             int shot = generator.nextInt(15);
             Goop goop = ((MonsterSprite)monster).getBomb();
+
+            if(goop.isDirecao() == 0) {
+                goop.setDirecao(new Random().nextInt(8)+1);
+            }
 
             if (shot == Commons.CHANCE && monster.isVisible() && goop.isDestroyed()) {
 
@@ -222,9 +281,41 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
             if (!goop.isDestroyed()) {
 
-                goop.setY(goop.getY() + 1);
+                if (goop.isDirecao() == 1) {
+                    goop.setY(goop.getY() - 1);
+                    goop.setX(goop.getX() - 1);
+                }
+                if (goop.isDirecao() == 2) {
+                    goop.setY(goop.getY() + 1);
+                    goop.setX(goop.getX() - 1);
+                }
+                if (goop.isDirecao() == 3) {
+                    goop.setY(goop.getY() - 1);
+                    goop.setX(goop.getX() + 1);
+                }
+                if (goop.isDirecao() == 4) {
+                    goop.setY(goop.getY() + 1);
+                    goop.setX(goop.getX() + 1);
+                }
+                if (goop.isDirecao() == 5) {
+                    goop.setY(goop.getY());
+                    goop.setX(goop.getX() - 1);
+                }
+                if (goop.isDirecao() == 6) {
+                    goop.setY(goop.getY() - 1);
+                    goop.setX(goop.getX());
+                }
+                if (goop.isDirecao() == 7) {
+                    goop.setY(goop.getY());
+                    goop.setX(goop.getX() + 1);
+                }
+                if (goop.isDirecao() == 8) {
+                    goop.setY(goop.getY() + 1);
+                    goop.setX(goop.getX());
+                }
 
-                if (goop.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
+
+                if (goop.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT || goop.getY() <= 0 || goop.getX() <= 0 || goop.getX() >= Commons.BOARD_WIDTH) {
 
                     goop.setDestroyed(true);
                 }

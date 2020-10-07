@@ -14,15 +14,15 @@ public class MonsterSprite extends BadnessBoxSprite {
     private String monsterImage;
     private Integer monsterImageIndice;
 
-    public MonsterSprite(int x, int y) {
-        initMonster(x, y);
+    public MonsterSprite(int x, int y, int i) {
+        initMonster(x, y, i);
     }
 
     public int getMonsterImageIndice(){
         return this.monsterImageIndice;
     }
 
-    private void initMonster(int x, int y) {
+    private void initMonster(int x, int y, int i) {
 
         this.x = x;
         this.y = y;

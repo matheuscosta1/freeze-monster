@@ -7,6 +7,7 @@ public class Sprite {
     private boolean visible;
     protected Image image;
     private boolean dying;
+    private boolean dyingvisible;
 
     protected int x;
     protected int y;
@@ -14,6 +15,7 @@ public class Sprite {
     protected int imageHeight;
     protected int dx;
     protected int dy;
+    protected int direcaomonstro = 0;
 
     public Sprite() {
 
@@ -65,6 +67,16 @@ public class Sprite {
         return x;
     }
 
+    public void setDyingvisible(boolean dying) {
+
+        this.dyingvisible = dying;
+    }
+
+    public boolean isDyingvisible() {
+
+        return this.dyingvisible;
+    }
+
     public int getImageWidth() {
 
         return imageWidth;
@@ -104,5 +116,21 @@ public class Sprite {
     public void moveY(int direction) {
 
         this.y += direction;
+    }
+
+    public int getDx() {
+        return dx;
+    }
+
+    public int getDy() {
+        return dy;
+    }
+
+    public int getDirecaomonstro() {
+        return direcaomonstro;
+    }
+
+    public void setDirecaomonstro(int direcaomonstro) {
+        this.direcaomonstro = direcaomonstro;
     }
 }

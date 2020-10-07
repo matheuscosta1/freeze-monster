@@ -11,6 +11,8 @@ public class Player extends Sprite {
     protected int width = 30;
     protected int weight = 50;
     private String player;
+    protected int dx;
+    protected int dy;
 
     public Player(String image) {
         loadImage(image);

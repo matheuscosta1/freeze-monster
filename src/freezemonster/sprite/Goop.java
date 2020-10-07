@@ -8,6 +8,7 @@ import java.awt.*;
 public class Goop extends BadSprite {
 
     private boolean destroyed;
+    private int direcao=0;
 
     public Goop(int x, int y) {
 
@@ -37,6 +38,14 @@ public class Goop extends BadSprite {
     @Override
     public int getMonsterImageIndice() {
         return 0;
+    }
+
+    public int isDirecao() {
+        return direcao;
+    }
+
+    public void setDirecao(int direcao) {
+        this.direcao = direcao;
     }
 
 }
