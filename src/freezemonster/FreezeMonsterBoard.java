@@ -133,11 +133,8 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
                 direction = -1;
 
-                Iterator<BadSprite> i1 = badSprites.iterator();
-
-                while (i1.hasNext()) {
-                    BadSprite monster2 = i1.next();
-                    if(monster2.isVisible()){
+                for (BadSprite monster2 : badSprites) {
+                    if (monster2.isVisible()) {
                         monster2.setY(monster2.getY() + random.nextInt(100 - 1 + 1));
                         monster2.setX(monster2.getX() + random.nextInt(100 - 1 + 1));
                     }
@@ -148,11 +145,8 @@ public class FreezeMonsterBoard extends AbstractBoard{
 
                 direction = 1;
 
-                Iterator<BadSprite> i2 = badSprites.iterator();
-
-                while (i2.hasNext()) {
-                    BadSprite monster2 = i2.next();
-                    if(monster2.isVisible()){
+                for (BadSprite monster2 : badSprites) {
+                    if (monster2.isVisible()) {
                         monster2.setY(monster2.getY() + random.nextInt(100 - 1 + 1));
                         monster2.setX(monster2.getX() + random.nextInt(100 - 1 + 1));
                     }
@@ -160,11 +154,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
             }
         }
 
-        Iterator<BadSprite> it = badSprites.iterator();
-
-        while (it.hasNext()) {
-
-            BadSprite monster = it.next();
+        for (BadSprite monster : badSprites) {
 
             if (monster.isVisible()) {
 
@@ -210,7 +200,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
             int playerX = players.get(0).getX();
             int playerY = players.get(0).getY();
 
-            if (players.get(0).isVisible() && !goop.isDestroyed()) {
+            if (players.get(0).isVisible() && !goop.isDestroyed() && !monster.isDestroyed()) {
 
                 if (
                         ((bombX >= (playerX))
