@@ -26,7 +26,7 @@ public class SpaceInvadersBoard extends AbstractBoard{
     private int deaths = 0;
 
 
-    private String explImg = "images/explosion.png";
+    private String explosionImage = "images/explosion.png";
 
     public SpaceInvadersBoard(String image) {
         super(image);
@@ -77,25 +77,6 @@ public class SpaceInvadersBoard extends AbstractBoard{
 		}
 	}
 
-//    private void gameOver(Graphics g) {
-//
-//        g.setColor(Color.black);
-//        g.fillRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
-//
-//        g.setColor(new Color(0, 32, 48));
-//        g.fillRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
-//        g.setColor(Color.white);
-//        g.drawRect(50, Commons.BOARD_WIDTH / 2 - 30, Commons.BOARD_WIDTH - 100, 50);
-//
-//        Font small = new Font("Helvetica", Font.BOLD, 14);
-//        FontMetrics fontMetrics = this.getFontMetrics(small);
-//
-//        g.setColor(Color.white);
-//        g.setFont(small);
-//        g.drawString(message, (Commons.BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2,
-//                Commons.BOARD_WIDTH / 2);
-//    }
-
     protected void update() {
 
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
@@ -126,7 +107,7 @@ public class SpaceInvadersBoard extends AbstractBoard{
                             && shotY >= (alienY)
                             && shotY <= (alienY + Commons.ALIEN_HEIGHT)) {
 
-                        ImageIcon ii = new ImageIcon(explImg);
+                        ImageIcon ii = new ImageIcon(explosionImage);
                         alien.setImage(ii.getImage());
                         alien.setDying(true);
                         deaths++;
@@ -201,9 +182,6 @@ public class SpaceInvadersBoard extends AbstractBoard{
         updateOtherSprites();
     }
 
-	
-
-    
     protected void updateOtherSprites() {
 		Random generator = new Random();
 
@@ -231,7 +209,7 @@ public class SpaceInvadersBoard extends AbstractBoard{
                         && bombY >= (playerY)
                         && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
 
-                    ImageIcon ii = new ImageIcon(explImg);
+                    ImageIcon ii = new ImageIcon(explosionImage);
                     players.get(0).setImage(ii.getImage());
                     players.get(0).setDying(true);
                     bomb.setDestroyed(true);

@@ -23,8 +23,8 @@ public class Goop extends BadSprite {
         this.x = x;
         this.y = y;
 
-        String bombImg = "images/goop.png";
-        ImageIcon ii = new ImageIcon(bombImg);
+        String goopImage = "images/goop.png";
+        ImageIcon ii = new ImageIcon(goopImage);
         setImage(ii.getImage().getScaledInstance(Commons.GOOP_WIDTH, Commons.GOOP_HEIGHT, Image.SCALE_SMOOTH));
     }
 

@@ -38,14 +38,14 @@ public class MonsterSprite extends BadnessBoxSprite {
         setImage(ii.getImage().getScaledInstance(Commons.MONSTER_WIDTH, Commons.MONSTER_HEIGHT, Image.SCALE_SMOOTH));
     }
 
-    public Goop getBomb() {
+    public Goop getGoop() {
         return goop;
     }
 
 	@Override
 	public LinkedList<BadSprite> getBadnesses() {
-		LinkedList<BadSprite> aBomb = new LinkedList<BadSprite>();
-		aBomb.add(goop);
-		return aBomb;
+		LinkedList<BadSprite> goop = new LinkedList<BadSprite>();
+		goop.add(this.goop);
+		return goop;
 	}
 }
