@@ -26,6 +26,8 @@ public abstract class AbstractBoard extends JPanel {
 
     protected Timer timer;
 
+    protected String image = null;
+
     protected abstract void createBadSprites();
     protected abstract void createOtherSprites();
     protected abstract void drawOtherSprites(Graphics g);
@@ -34,15 +36,18 @@ public abstract class AbstractBoard extends JPanel {
 
     public AbstractBoard(String image) {
 
-        initBoard(image);
-        createPlayers(image);
-        numberPlayers = 1;
-        badSprites = new LinkedList<BadSprite>();
-        createBadSprites();
-        createOtherSprites();
+        if(this.image == null){
+            this.image = image;
+            initBoard();
+            createPlayers();
+            numberPlayers = 1;
+            badSprites = new LinkedList<BadSprite>();
+            createBadSprites();
+            createOtherSprites();
+        }
     }
 
-    protected void initBoard(String image) {
+    protected void initBoard() {
 
     	addKeyListener(new TAdapter());
     	setFocusable(true);
@@ -52,7 +57,7 @@ public abstract class AbstractBoard extends JPanel {
     	timer = new Timer(Commons.DELAY, new GameCycle());
     	timer.start();
 
-    	createPlayers(image);
+    	createPlayers();
     	numberPlayers = 1;
     	badSprites = new LinkedList<BadSprite>();
     	createBadSprites();
@@ -60,9 +65,9 @@ public abstract class AbstractBoard extends JPanel {
     }
 
 
-    protected void createPlayers(String player) {
-		players = new LinkedList<Player>();
-        players.add(createPlayer(player));
+    protected void createPlayers() {
+		players = new LinkedList<>();
+        players.add(createPlayer(image));
 	}
 	
 	protected Player createPlayer(String player) {
