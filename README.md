@@ -1,5 +1,7 @@
-# Java Space Invaders
-Java Space Invaders game clone source code 
+# Java Freeze Monster
+Java Freeze Monster's game based on Space Invaders game.
+
+Repo with Space Invaders game:
 
 http://zetcode.com/tutorials/javagamestutorial/spaceinvaders/
 
