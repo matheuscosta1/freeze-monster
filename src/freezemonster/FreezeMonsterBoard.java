@@ -30,7 +30,7 @@ public class FreezeMonsterBoard extends AbstractBoard{
     }
 
     protected void createBadSprites() {
-        for (int i = 0; i < Commons.NUMBER_OF_MONSTERS_TO_DESTROY; i++) {
+        for (int i = 0; i <= Commons.NUMBER_OF_MONSTERS_TO_DESTROY; i++) {
 
             MonsterSprite monster = new MonsterSprite(Commons.MONSTER_INIT_X + 18 * (int)(Math.random()*10),
                     Commons.MONSTER_INIT_Y + 18 * (int)(Math.random()*10), i);

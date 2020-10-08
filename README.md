@@ -1,6 +1,10 @@
 # Java Freeze Monster
 Java Freeze Monster's game based on Space Invaders game.
 
+![Freeze Monster ](freezemonster.png)
+
+# Java Space Invaders
+
 Repo with Space Invaders game:
 
 http://zetcode.com/tutorials/javagamestutorial/spaceinvaders/
